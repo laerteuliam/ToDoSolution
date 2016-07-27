@@ -1,0 +1,40 @@
+﻿<div ng-controller="ToDoController as ctr" class="col-md-5">
+    <h3>
+        Lista de Tarefas
+    </h3>
+
+    
+    <div class="input-group" style="padding-bottom:10px;">
+            <input type="text" ng-model="ctr.ToDo.Descricao" class="form-control" placeholder="O que fazer?" />
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button" ng-click="ctr.adicionar(ctr.ToDo)" ng-disabled="ctr.ToDo.Descricao.length==0">Adicionar</button>
+            </span>
+        </div>
+    
+
+    <table class="table table-striped">
+        <tr ng-repeat="item in ctr.ToDoList | orderBy: '-ID'">
+            <td>
+                <input type="checkbox" ng-click="ctr.alterarStatus(item)" ng-checked="item.Status==1" ng-show="item.ID!=ctr.ItemEmEdicao">
+            </td>    
+            <td ng-show="item.ID!=ctr.ItemEmEdicao && item.Status==0">
+                <button class="btn btn-link" ng-click="ctr.habilitarEdicao(item.ID)">{{item.Descricao}}</button>
+            </td>
+            <td ng-show="item.Status==1">
+                <del>{{item.Descricao}}</del>
+            </td>
+            <td ng-show="item.ID==ctr.ItemEmEdicao">
+                <div class="input-group col-md-10">
+                    <input class="form-control" type="text" ng-model="item.Descricao">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" ng-click="ctr.editar(item)">Editar</button>
+                        <button class="btn btn-default" ng-click="ctr.cancelar()">Cancelar</button>
+                    </span>
+                </div>
+            </td>
+            <td style="width:15px;">
+                <button class="glyphicon glyphicon-trash" ng-click="ctr.deletar(item.ID)" />
+            </td>
+        </tr>
+    </table>
+</div>
